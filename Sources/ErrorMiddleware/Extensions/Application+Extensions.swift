@@ -1,4 +1,4 @@
-// fs-error-middleware
+// FS Error Middleware
 // Copyright (C) 2024  FREEDOM SPACE, LLC
 
 //
@@ -24,13 +24,12 @@
 
 import Vapor
 
+/// Extension for core type representing a Vapor application.
 extension Application {
+    /// Global encoder for convert fields in struct to snake case
     var globalEncoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        let formatter = DateFormatter()
-        formatter.dateFormat = Constants.defaultDateFormat
-        encoder.dateEncodingStrategy = .formatted(formatter)
         return encoder
     }
 }

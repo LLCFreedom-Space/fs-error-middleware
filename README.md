@@ -4,7 +4,7 @@ Quick implementation of error middleware.
 
 ## Swift version
 
-The latest version of FSGetAppStatus requires **Swift 5.8** and **MacOS v13** or later. You can download this version of the Swift binaries by following this [link](https://swift.org/download/).
+The latest version of ErrorMiddleware requires **Swift 5.8** and **MacOS v13** or later. You can download this version of the Swift binaries by following this [link](https://swift.org/download/).
 
 ## Usage
 
@@ -31,7 +31,7 @@ Add the `ErrorMiddleware` package to the dependencies within your application’
 ```
 Add `ErrorMiddleware` to your target's dependencies:
 ```swift
-.target(name: "FSGetAppStatus", dependencies: ["ErrorMiddleware"]),
+.target(name: "ErrorMiddleware", dependencies: ["ErrorMiddleware"]),
 ```
 #### Import package
 ```swift
@@ -41,7 +41,7 @@ import ErrorMiddleware
 ## Getting Started
 An example of a method call from this library 
 ```
-app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: "ServiceNumberId"))
+app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: "NumberId"))
 
 ```
 To access the methods that are in this library, you need to call the application, since this library is an extension to the application

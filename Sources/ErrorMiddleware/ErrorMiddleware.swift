@@ -1,4 +1,4 @@
-// fs-error-middleware
+// FS Error Middleware
 // Copyright (C) 2024  FREEDOM SPACE, LLC
 
 //
@@ -24,10 +24,11 @@
 
 import Vapor
 
-// MARK: Setup ErrorMiddleware
+/// Extension for ErrorMiddleware.
 public extension ErrorMiddleware {
     /// Custom `ErrorMiddleware`
     /// - Parameter environment: `Environment`
+    /// - Parameter number: `Int`
     /// - Returns: `ErrorMiddleware`
     static func custom(environment: Environment, for number: Int) -> ErrorMiddleware {
         .init { req, error in
