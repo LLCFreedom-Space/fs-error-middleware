@@ -1,4 +1,4 @@
-// fs-error-middleware
+// FS Error Middleware
 // Copyright (C) 2024  FREEDOM SPACE, LLC
 
 //
@@ -24,7 +24,9 @@
 
 import Vapor
 
+/// Extension for AppError
 public extension AppError {
+    /// Number of error
     var number: String {
         ""
     }

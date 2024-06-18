@@ -1,4 +1,4 @@
-// fs-error-middleware
+// FS Error Middleware
 // Copyright (C) 2024  FREEDOM SPACE, LLC
 
 //
@@ -24,6 +24,7 @@
 
 import Vapor
 
+/// Protocol for AppError.
 public protocol AppError: AbortError, DebuggableError {
     /// The number for this error.
     var number: String { get }

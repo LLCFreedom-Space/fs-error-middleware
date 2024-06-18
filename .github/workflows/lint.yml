@@ -1,0 +1,18 @@
+name: Lint code
+
+on: push
+
+# Allow one concurrent deployment
+concurrency:
+  group: "linting"
+  cancel-in-progress: true
+
+jobs:
+  SwiftLint:
+    runs-on: macOS-13
+    steps:
+      - uses: actions/checkout@v4
+      - name: Switch Xcode 🔄
+        run: sudo xcode-select --switch /Applications/Xcode_15.0.app
+      - name: Swift Lint
+        run: swiftlint --strict
