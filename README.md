@@ -24,7 +24,7 @@ Add the `ErrorMiddleware` package to the dependencies within your application’
 ```swift
 .package(url: "https://github.com/LLCFreedom-Space/fs-error-middleware.git", from: "x.x.x")
 ```
-Add `FSGetAppStatus` to your target's dependencies:
+Add `ErrorMiddleware` to your target's dependencies:
 ```swift
 .target(name: "ErrorMiddleware", dependencies: ["ErrorMiddleware"]),
 ```
