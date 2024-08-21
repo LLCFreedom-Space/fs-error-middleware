@@ -80,7 +80,7 @@ public extension ErrorMiddleware {
             /// Attempt to serialize the error to json
             do {
                 let errorResponse = ErrorResponse(isError: true, reason: reason, error: identifier, status: status, code: code)
-                let encoder = req.application.globalEncoder
+                let encoder = JSONEncoder()
                 response.body = try .init(data: encoder.encode(errorResponse))
                 response.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
             } catch {
