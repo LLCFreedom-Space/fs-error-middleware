@@ -27,7 +27,7 @@ import Vapor
 /// Body for error response
 public struct ErrorResponse: Content {
     /// Some Error in `Bool` error.
-    public var isError: Bool?
+    public var isError: Bool
     /// Some Error in `String` reason.
     public var reason: String
     /// Some Error in `String` error identifier.
@@ -37,7 +37,7 @@ public struct ErrorResponse: Content {
     /// Some Error in `String` error code.
     public var code: String?
     /// Some Error in `String` error uri.
-    public var errorUri: String? = "https://example.com/doc/errors"
+    public var errorUri: String = "https://example.com/doc/errors"
 
     /// Initializes a `ErrorResponse` with the specified details.
     /// - Parameters:
@@ -48,12 +48,12 @@ public struct ErrorResponse: Content {
     ///   - code: `String`
     ///   - errorUri: `String`
     public init(
-        isError: Bool? = true,
+        isError: Bool,
         reason: String,
         error: String? = nil,
         status: String? = nil,
         code: String? = nil,
-        errorUri: String? = "https://example.com/doc/errors"
+        errorUri: String = "https://example.com/doc/errors"
     ) {
         self.isError = isError
         self.reason = reason
