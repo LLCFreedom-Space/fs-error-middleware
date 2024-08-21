@@ -63,14 +63,3 @@ public struct ErrorResponse: Content {
         self.errorUri = errorUri
     }
 }
-
-extension ErrorResponse {
-   public enum CodingKeys: String, CodingKey {
-        case isError = "is_error"
-        case reason
-        case error
-        case status
-        case code
-        case errorUri = "error_uri"
-    }
-}
