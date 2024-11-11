@@ -54,3 +54,16 @@ app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: "Nu
 
 ```
 To access the methods that are in this library, you need to call the application, since this library is an extension to the application
+
+## Links
+
+LLC Freedom Space – [@LLCFreedomSpace](https://twitter.com/llcfreedomspace) – [support@freedomspace.company](mailto:support@freedomspace.company)
+
+Distributed under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3. See [LICENSE.md][license-url] for more information.
+
+ [GitHub](https://github.com/LLCFreedom-Space)
+
+[swift-image]:https://img.shields.io/badge/swift-5.9-orange.svg
+[swift-url]: https://swift.org/
+[license-image]: https://img.shields.io/badge/License-GPLv3-blue.svg
+[license-url]: LICENSE
