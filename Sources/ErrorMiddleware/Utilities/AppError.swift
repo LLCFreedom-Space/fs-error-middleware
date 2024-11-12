@@ -24,7 +24,8 @@
 
 import Vapor
 
-/// Protocol for AppError.
+/// AppError is a custom protocol designed for error handling within Vapor applications.
+/// It combines the functionalities of AbortError and DebuggableError, allowing for both HTTP response control and enhanced debugging information in a single error type.
 public protocol AppError: AbortError, DebuggableError {
     /// The number for this error.
     var number: String { get }

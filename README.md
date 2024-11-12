@@ -9,8 +9,19 @@
 
 # FS Error Middleware
 
-Quick implementation of error middleware.
+Error middleware is essential in web applications, particularly in frameworks like Express.js, for several reasons:
 
+## Centralized Error Handling:
+Error middleware consolidates error-handling logic in one place, which helps keep your code organized and easier to maintain. This centralized approach ensures consistent error responses across all routes and components of the application.
+## Custom Error Responses:
+It enables you to send standardized error responses to clients, enhancing the user experience and making debugging easier. Error middleware can provide detailed error messages and HTTP status codes (e.g., 400, 404, 500) based on the error type.
+## Logging:
+Error middleware allows for logging errors systematically, making it easier to track, analyze, and resolve issues. You can log errors to a database, log files, or monitoring tools, helping you gather valuable information for troubleshooting.
+## Global Error Catching:
+It catches unexpected errors that may occur anywhere in the request lifecycle, preventing these errors from crashing the server. This "catch-all" approach protects the application and maintains stability, even when unexpected issues arise.
+## Security:
+By handling errors in middleware, you can hide sensitive information (like stack traces) from users. Instead, you can return a generic error message, which helps secure your application and prevents attackers from learning about its internal workings.
+In summary, error middleware is critical for maintaining stability, security, and consistent error handling across a web application, improving both developer and user experience.
 ## Swift version
 
 The latest version of ErrorMiddleware requires **Swift 5.9** and **MacOS v13** or later. You can download this version of the Swift binaries by following this [link](https://swift.org/download/).
@@ -54,3 +65,16 @@ app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: "Nu
 
 ```
 To access the methods that are in this library, you need to call the application, since this library is an extension to the application
+
+## Links
+
+LLC Freedom Space – [@LLCFreedomSpace](https://twitter.com/llcfreedomspace) – [support@freedomspace.company](mailto:support@freedomspace.company)
+
+Distributed under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3. See [LICENSE.md][license-url] for more information.
+
+ [GitHub](https://github.com/LLCFreedom-Space)
+
+[swift-image]:https://img.shields.io/badge/swift-5.9-orange.svg
+[swift-url]: https://swift.org/
+[license-image]: https://img.shields.io/badge/License-GPLv3-blue.svg
+[license-url]: LICENSE

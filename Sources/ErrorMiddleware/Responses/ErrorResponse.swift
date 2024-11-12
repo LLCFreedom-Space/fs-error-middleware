@@ -41,14 +41,14 @@ public struct ErrorResponse: Content {
     
     /// Initializes a `ErrorResponse` with the specified details.
     /// - Parameters:
-    ///   - isError: `Bool`
-    ///   - reason: `String`
-    ///   - error: `String`
-    ///   - status: `String`
-    ///   - code: `String`
-    ///   - errorUri: `String`
+    ///   - isError: Set to true, indicating the presence of an error.
+    ///   - reason: A human-readable message describing the error.
+    ///   - error: The unique identifier of the error.
+    ///   - status: The HTTP status code as a string.
+    ///   - code: A uniquely generated error code composed of the HTTP status code, provided number, and any additional error identifier.
+    ///   - errorUri: Description of error in documentation
     public init(
-        isError: Bool,
+        isError: Bool = true,
         reason: String,
         error: String? = nil,
         status: String? = nil,

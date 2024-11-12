@@ -26,12 +26,13 @@ import Vapor
 
 /// Extension for ErrorMiddleware.
 public extension ErrorMiddleware {
-    /// Custom `ErrorMiddleware`
-    /// - Parameter environment: `Environment`
-    /// - Parameter number: `Int`
-    /// - Returns: `ErrorMiddleware`
+    /// Creates a custom `ErrorMiddleware` instance with specialized error handling based on the application's environment and a provided numeric identifier.
+    /// This middleware intercepts errors during request processing and generates consistent error responses for various error types, ensuring user-friendly messaging and detailed error information when appropriate.
+    /// - Parameter environment: The current running environment of the application, which is typically development, testing, or release. This is used to adjust the verbosity of error messages, revealing more detailed error information in non-release modes.
+    /// - Parameter number: A custom numeric identifier used to build unique error codes for tracking and reference.
+    /// - Returns: Returns an instance of `ErrorMiddleware` configured to process errors based on the provided environment and numeric identifier. This middleware standardizes error responses and logs detailed error information.
     static func custom(environment: Environment, for number: Int) -> ErrorMiddleware {
-        .init { req, error in
+        ErrorMiddleware { req, error in
             let httpStatus: HTTPResponseStatus
             let reason: String
             let headers: HTTPHeaders
@@ -79,7 +80,12 @@ public extension ErrorMiddleware {
             let response = Response(status: httpStatus, headers: headers)
             /// Attempt to serialize the error to json
             do {
-                let errorResponse = ErrorResponse(isError: true, reason: reason, error: identifier, status: status, code: code)
+                let errorResponse = ErrorResponse(
+                    reason: reason,
+                    error: identifier,
+                    status: status,
+                    code: code
+                )
                 let encoder = req.application.globalEncoder
                 response.body = try .init(data: encoder.encode(errorResponse))
                 response.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
