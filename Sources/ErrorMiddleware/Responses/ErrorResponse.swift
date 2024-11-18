@@ -24,19 +24,28 @@
 
 import Vapor
 
-/// Body for error response
+/// A model representing a standardized error response.
+/// This struct conforms to `Content`, making it suitable for encoding and decoding in Vapor applications.
+/// It provides detailed information about an error, including its status, code, and a URI for further documentation.
 public struct ErrorResponse: Content {
-    /// Some Error in `Bool` error.
+    /// Indicates whether the response represents an error.
+    /// A `true` value signifies that an error occurred, while `false` may indicate a successful response.
     public var isError: Bool
-    /// Some Error in `String` reason.
+    /// A human-readable description of the error.
+    /// This field typically contains a brief explanation of why the error occurred.
     public var reason: String
-    /// Some Error in `String` error identifier.
+    /// An optional identifier for the error.
+    /// This can be used to reference a specific error type or category for debugging or logging purposes.
     public var error: String?
-    /// Some Error in `String` error status.
+    /// An optional status representing the error state.
+    /// This field may contain a status code, textual representation, or other status-related information.
     public var status: String?
-    /// Some Error in `String` error code.
+    /// An optional code representing the error.
+    /// This is often used to categorize errors into distinct types or classes, typically defined by the API.
     public var code: String?
-    /// Some Error in `String` error uri.
+    /// A URI providing further documentation about the error.
+    /// By default, this is set to `https://example.com/doc/errors`, which should be updated to point to
+    /// the appropriate documentation resource in your application.
     public var errorUri: String = "https://example.com/doc/errors"
     
     /// Initializes a `ErrorResponse` with the specified details.

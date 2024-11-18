@@ -24,23 +24,14 @@
 
 import Vapor
 
-/// Equatable protocol implementation for `ErrorResponse` struct.
-///
-/// Two `ErrorResponse` structs are considered equal if they have the same:
-///
-/// - isError
-/// - reason
-/// - error
-/// - status
-/// - status
-/// - code
-/// - errorUri
+/// Extends `ErrorResponse` to conform to the `Equatable` protocol.
 extension ErrorResponse: Equatable {
-    /// Conform `ErrorResponse` to `Equatable` protocol
+    /// Determines whether two `ErrorResponse` instances are equal.
+    /// This implementation compares all properties of `ErrorResponse` to check for equality.
     /// - Parameters:
-    ///   - lhs: `ErrorResponse`
-    ///   - rhs: `ErrorResponse`
-    /// - Returns: `Bool`
+    ///   - lhs: The left-hand side `ErrorResponse` instance.
+    ///   - rhs: The right-hand side `ErrorResponse` instance.
+    /// - Returns: A `Bool` value indicating whether the two instances are equal.
     public static func == (lhs: ErrorResponse, rhs: ErrorResponse) -> Bool {
         return lhs.isError == rhs.isError &&
         lhs.reason == rhs.reason &&

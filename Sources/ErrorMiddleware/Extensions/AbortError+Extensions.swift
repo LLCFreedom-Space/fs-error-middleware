@@ -24,9 +24,12 @@
 
 import Vapor
 
-/// Extension for AbortError
+/// A public extension of the `AbortError` that provides an additional computed property for retrieving the error number.
 public extension AbortError {
-    /// Number of error
+    /// A string representation of the error number.
+    /// This property is a placeholder that returns an empty string (`""`) by default.
+    /// You can override this extension or use it to provide a custom implementation
+    /// for error numbers in your `AbortError` conforming types.
     var number: String {
         ""
     }
