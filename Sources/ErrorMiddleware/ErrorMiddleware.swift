@@ -27,11 +27,17 @@ import Foundation
 
 /// Extension for ErrorMiddleware.
 public extension ErrorMiddleware {
-    /// Creates a custom `ErrorMiddleware` instance with specialized error handling based on the application's environment and a provided numeric identifier.
-    /// This middleware intercepts errors during request processing and generates consistent error responses for various error types, ensuring user-friendly messaging and detailed error information when appropriate.
-    /// - Parameter environment: The current running environment of the application, which is typically development, testing, or release. This is used to adjust the verbosity of error messages, revealing more detailed error information in non-release modes.
-    /// - Parameter number: A custom numeric identifier used to build unique error codes for tracking and reference.
-    /// - Returns: Returns an instance of `ErrorMiddleware` configured to process errors based on the provided environment and numeric identifier. This middleware standardizes error responses and logs detailed error information.
+    /// Creates a custom `ErrorMiddleware` for handling errors in a Vapor application.
+    ///
+    /// This function provides a tailored error handling mechanism based on the application's environment
+    /// and an additional numeric identifier. It categorizes errors into specific cases, assigns appropriate
+    /// HTTP status codes, and generates error responses in JSON format.
+    ///
+    /// - Parameters:
+    ///   - environment: The current `Environment` of the application, used to determine error visibility and debugging details.
+    ///   - number: An additional numeric identifier to uniquely identify error codes.
+    ///   - keyEncodingStrategy: The key encoding strategy for the `JSONEncoder`, defaulting to `.convertToSnakeCase`.
+    /// - Returns: An `ErrorMiddleware` instance configured with the custom error handling logic.
     static func custom(
         environment: Environment,
         for number: Int,

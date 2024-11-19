@@ -23,10 +23,21 @@
 //
 
 import XCTest
+import XCTVapor
 @testable import ErrorMiddleware
 
 /// Unit tests for the `ErrorResponse` equatable conformance.
 final class ErrorResponseTests: XCTestCase {
+    //  swiftlint: disable implicitly_unwrapped_optional
+    var app: Application!
+    //  swiftlint: enable implicitly_unwrapped_optional
+    override func setUp() async throws {
+        app = try await Application.make(.testing)
+    }
+
+    override func tearDown() async throws {
+        try await app.asyncShutdown()
+    }
     /// Tests the equality of two `ErrorResponse` instances.
     func testErrorResponseEquatable() {
         let firstErrorResponse = ErrorResponse(

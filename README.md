@@ -59,13 +59,86 @@ import ErrorMiddleware
 ```
 
 ## Getting Started
-An example of a method call from this library 
-```
-app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: "NumberId"))
+To use the `custom` static function to create a custom error middleware in a Vapor application, you need to integrate it into your application's middleware stack. Here’s how you can do it step by step:
 
-```
-To access the methods that are in this library, you need to call the application, since this library is an extension to the application
+### 1. Add the `custom` Middleware to the Application
+You’ll typically set up the middleware in the `configure.swift` file (or equivalent) of your Vapor application.
 
+### Example Usage:
+
+```swift
+import Vapor
+
+public func configure(_ app: Application) throws {
+    // Set the environment
+    let environment = app.environment
+
+    // Define a unique number for error codes
+    let errorNumber = 42
+
+    // Create the custom error middleware
+    let errorMiddleware = ErrorMiddleware.custom(
+        environment: environment,
+        for: errorNumber,
+        keyEncodingStrategy: .convertToSnakeCase // Default; can be omitted
+    )
+
+    // Replace the default middleware with the custom middleware
+    app.middleware.use(errorMiddleware)
+
+    // Continue with other configurations, like routes
+    try routes(app)
+}
+```
+
+### 2. Explanation of Parameters:
+- **`environment`**: The current environment (`app.environment`). It determines how errors are logged and displayed. For example:
+  - `isRelease = true`: Hides error details from users.
+  - `isRelease = false`: Shows detailed error information for debugging.
+
+- **`number`**: A numeric identifier appended to the error codes. This allows for unique and traceable error codes across your application.
+
+- **`keyEncodingStrategy`** (optional): Specifies how property keys in your error response are encoded. The default is `.convertToSnakeCase`, which transforms properties like `isError` to `is_error` in JSON.
+
+### 3. Result:
+With the custom middleware in place:
+- Errors thrown in your application will be handled by this middleware.
+- Based on the error type (e.g., `AppError`, `AbortError`, or `LocalizedError`), appropriate error responses will be generated.
+- Error responses will follow the JSON structure defined by `ErrorResponse`.
+
+### Example Error Response (in JSON):
+
+For a 404 `AbortError`:
+```json
+{
+  "is_error": true,
+  "reason": "Not Found",
+  "error": "404",
+  "status": "404",
+  "code": "404.42.1234"
+}
+```
+
+For a generic internal server error:
+```json
+{
+  "is_error": true,
+  "reason": "Something went wrong.",
+  "error": "something_went_wrong",
+  "status": "500",
+  "code": "500.42.0000"
+}
+```
+
+### 4. Testing the Middleware:
+Run your Vapor application, and test with scenarios like:
+- Throwing a custom `AppError`.
+- Using `Abort(.notFound)` or other `AbortError`.
+- Triggering a generic error.
+
+### 5. Optional Improvements:
+- Use dependency injection to pass custom parameters for more flexibility.
+- Modify the `number` to represent different modules or contexts (e.g., `42` for authentication, `100` for payment systems).
 ## Links
 
 LLC Freedom Space – [@LLCFreedomSpace](https://twitter.com/llcfreedomspace) – [support@freedomspace.company](mailto:support@freedomspace.company)

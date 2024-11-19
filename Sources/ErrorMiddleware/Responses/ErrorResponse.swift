@@ -49,6 +49,7 @@ public struct ErrorResponse: Content {
     public var errorUri: String = "https://example.com/doc/errors"
     
     /// Initializes a `ErrorResponse` with the specified details.
+    /// 
     /// - Parameters:
     ///   - isError: Set to true, indicating the presence of an error.
     ///   - reason: A human-readable message describing the error.
