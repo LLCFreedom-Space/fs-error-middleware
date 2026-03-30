@@ -22,24 +22,14 @@
 //  Created by Mykola Buhaiov on 18.06.2024.
 //
 
-import XCTest
-import XCTVapor
 @testable import ErrorMiddleware
+import VaporTesting
+import Testing
 
-/// Unit tests for the `ErrorResponse` equatable conformance.
-final class ErrorResponseTests: XCTestCase {
-    //  swiftlint: disable implicitly_unwrapped_optional
-    var app: Application!
-    //  swiftlint: enable implicitly_unwrapped_optional
-    override func setUp() async throws {
-        app = try await Application.make(.testing)
-    }
-
-    override func tearDown() async throws {
-        try await app.asyncShutdown()
-    }
-    /// Tests the equality of two `ErrorResponse` instances.
-    func testErrorResponseEquatable() {
+@Suite("Error response tests")
+struct ErrorResponseTests {
+    @Test("Error response equatable")
+    func errorResponseEquatable() {
         let firstErrorResponse = ErrorResponse(
             isError: true,
             reason: "reason of error",
@@ -57,10 +47,10 @@ final class ErrorResponseTests: XCTestCase {
             errorUri: "error uri"
         )
         // Assert that the two instances are equal.
-        XCTAssertEqual(firstErrorResponse, secondErrorResponse)
+        #expect(firstErrorResponse == secondErrorResponse)
         // Modify a property in the second instance.
         secondErrorResponse.code = "4"
         // Assert that the two instances are not equal after the modification.
-        XCTAssertNotEqual(firstErrorResponse, secondErrorResponse)
+        #expect(firstErrorResponse != secondErrorResponse)
     }
 }

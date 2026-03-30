@@ -15,53 +15,56 @@
 //  You should have received a copy of the GNU Affero General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTVapor
 @testable import ErrorMiddleware
+import VaporTesting
+import Testing
 
-final class ErrorMiddlewareTests: XCTestCase {
-    //  swiftlint: disable implicitly_unwrapped_optional
-    var app: Application!
-    //  swiftlint: enable implicitly_unwrapped_optional
-    override func setUp() async throws {
-        app = try await Application.make(.testing)
-        app.post("order") { _ -> String in
-            return "done"
+@Suite("Error middleware tests")
+struct ErrorMiddlewareTests {
+    private func withApp(_ test: (Application) async throws -> ()) async throws {
+        let app = try await Application.make(.testing)
+        do {
+            app.post("order") { _ -> String in
+                return "done"
+            }
+            try await test(app)
+        } catch {
+            throw error
         }
-    }
-
-    override func tearDown() async throws {
         try await app.asyncShutdown()
     }
 
-    func testErrorMiddlewareSnakeCase() throws {
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: 1))
+    @Test("Error middleware snake case")
+    func errorMiddlewareSnakeCase() async throws {
+        try await withApp { app in
+            app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: 1))
 
-        try app.testable().test(.GET, "order") { res throws in
-            let error = try res.content.decode(ErrorResponse.self, using: app.errorDecode)
-            XCTAssertEqual(error.isError, true)
-            XCTAssertEqual(error.reason, "Not Found")
-            XCTAssertEqual(error.error, "404")
-            XCTAssertEqual(error.status, "404")
-            XCTAssertEqual(error.code, "404.1.")
-            XCTAssertEqual(error.errorUri, "https://example.com/doc/errors")
+            try await app.test(.GET, "order") { res throws in
+                let error = try res.content.decode(ErrorResponse.self, using: app.errorDecode)
+                #expect(error.isError == true)
+                #expect(error.reason == "Not Found")
+                #expect(error.error == "404")
+                #expect(error.status == "404")
+                #expect(error.code == "404.1.")
+                #expect(error.errorUri == "https://example.com/doc/errors")
+            }
         }
     }
 
-    func testErrorMiddlewareDefaultCase() throws {
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: 1, keyEncodingStrategy: .useDefaultKeys))
+    @Test("Error middleware default case")
+    func errorMiddlewareDefaultCase() async throws {
+        try await withApp { app in
+            app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: 1, keyEncodingStrategy: .useDefaultKeys))
 
-        try app.testable().test(.GET, "order") { res throws in
-            let error = try res.content.decode(ErrorResponse.self)
-            XCTAssertEqual(error.isError, true)
-            XCTAssertEqual(error.reason, "Not Found")
-            XCTAssertEqual(error.error, "404")
-            XCTAssertEqual(error.status, "404")
-            XCTAssertEqual(error.code, "404.1.")
-            XCTAssertEqual(error.errorUri, "https://example.com/doc/errors")
+            try await app.test(.GET, "order") { res throws in
+                let error = try res.content.decode(ErrorResponse.self)
+                #expect(error.isError == true)
+                #expect(error.reason == "Not Found")
+                #expect(error.error == "404")
+                #expect(error.status == "404")
+                #expect(error.code == "404.1.")
+                #expect(error.errorUri == "https://example.com/doc/errors")
+            }
         }
     }
 }
