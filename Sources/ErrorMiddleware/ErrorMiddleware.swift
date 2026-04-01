@@ -48,7 +48,7 @@ public extension ErrorMiddleware {
             let reason: String
             let headers: HTTPHeaders
             let identifier: String?
-            let status: String
+            let status: Int
             let code: String
             switch error {
             case let appError as AppError:
@@ -56,7 +56,7 @@ public extension ErrorMiddleware {
                 httpStatus = appError.status
                 headers = appError.headers
                 identifier = appError.identifier
-                status = appError.status.code.description
+                status = Int(appError.status.code)
                 code = "\(appError.status.code.description).\(number).\(appError.number)"
             case let abort as AbortError:
                 /// This is an abort error, we should use its status, reason, and headers
@@ -64,7 +64,7 @@ public extension ErrorMiddleware {
                 httpStatus = abort.status
                 headers = abort.headers
                 identifier = abort.status.code.description
-                status = "\(abort.status.code)"
+                status = Int(abort.status.code)
                 code = "\(abort.status.code).\(number).\(abort.number)"
             case let error as LocalizedError where !environment.isRelease:
                 /// If not release mode, and error is debuggable, provide debug
@@ -73,8 +73,8 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = error.errorDescription
-                status = "500"
-                code = "500.\(number).0000"
+                status = Int(HTTPStatus.internalServerError.code)
+                code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             default:
                 /// Not an abort error, and not debuggable or in dev mode
                 /// Just deliver a generic 500 to avoid exposing any sensitive error info
@@ -82,8 +82,8 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = "something_went_wrong"
-                status = "500"
-                code = "500.\(number).0000"
+                status = Int(HTTPStatus.internalServerError.code)
+                code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             }
             /// Report the error to logger.
             req.logger.report(error: error)

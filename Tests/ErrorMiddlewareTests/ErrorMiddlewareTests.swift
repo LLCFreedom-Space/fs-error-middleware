@@ -44,7 +44,7 @@ struct ErrorMiddlewareTests {
                 #expect(error.isError == true)
                 #expect(error.reason == "Not Found")
                 #expect(error.error == "404")
-                #expect(error.status == "404")
+                #expect(error.status == 404)
                 #expect(error.code == "404.1.")
                 #expect(error.errorUri == "https://example.com/doc/errors")
             }
@@ -61,7 +61,7 @@ struct ErrorMiddlewareTests {
                 #expect(error.isError == true)
                 #expect(error.reason == "Not Found")
                 #expect(error.error == "404")
-                #expect(error.status == "404")
+                #expect(error.status == 404)
                 #expect(error.code == "404.1.")
                 #expect(error.errorUri == "https://example.com/doc/errors")
             }
