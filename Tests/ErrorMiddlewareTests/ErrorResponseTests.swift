@@ -34,7 +34,7 @@ struct ErrorResponseTests {
             isError: true,
             reason: "reason of error",
             error: "error",
-            status: 404,
+            status: "404",
             code: "404.1.0000",
             errorUri: "error uri"
         )
@@ -42,7 +42,7 @@ struct ErrorResponseTests {
             isError: true,
             reason: "reason of error",
             error: "error",
-            status: 404,
+            status: "404",
             code: "404.1.0000",
             errorUri: "error uri"
         )
