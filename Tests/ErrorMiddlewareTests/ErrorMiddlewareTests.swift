@@ -19,6 +19,7 @@
 import VaporTesting
 import Testing
 
+// swiftlint:disable:next numbers_smell
 @Suite("Error middleware tests")
 struct ErrorMiddlewareTests {
     private func withApp(_ test: (Application) async throws -> ()) async throws {
@@ -68,3 +69,4 @@ struct ErrorMiddlewareTests {
         }
     }
 }
+// swiftlint:disable:previous numbers_smell
