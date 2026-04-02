@@ -56,7 +56,7 @@ public extension ErrorMiddleware {
                 httpStatus = appError.status
                 headers = appError.headers
                 identifier = appError.identifier
-                status = appError.status.code.description
+                status = "\(appError.status.code)"
                 code = "\(appError.status.code.description).\(number).\(appError.number)"
             case let abort as AbortError:
                 /// This is an abort error, we should use its status, reason, and headers
@@ -73,8 +73,8 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = error.errorDescription
-                status = "500"
-                code = "500.\(number).0000"
+                status = "\(HTTPStatus.internalServerError.code)"
+                code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             default:
                 /// Not an abort error, and not debuggable or in dev mode
                 /// Just deliver a generic 500 to avoid exposing any sensitive error info
@@ -82,8 +82,8 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = "something_went_wrong"
-                status = "500"
-                code = "500.\(number).0000"
+                status = "\(HTTPStatus.internalServerError.code)"
+                code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             }
             /// Report the error to logger.
             req.logger.report(error: error)

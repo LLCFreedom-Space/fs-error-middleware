@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -18,6 +18,7 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.115.0"),
+        // 📄 Swift-DocC plugin for generating documentation.
         .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.0.0"),
     ],
     targets: [
@@ -32,13 +33,8 @@ let package = Package(
         .testTarget(
             name: "ErrorMiddlewareTests",
             dependencies: [
-                .target(
-                    name: "ErrorMiddleware"
-                ),
-                .product(
-                    name: "XCTVapor",
-                    package: "vapor"
-                ),
+                .target(name: "ErrorMiddleware"),
+                .product(name: "VaporTesting", package: "vapor")
             ]
         )
     ]
