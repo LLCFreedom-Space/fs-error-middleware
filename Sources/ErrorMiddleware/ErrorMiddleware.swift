@@ -48,7 +48,7 @@ public extension ErrorMiddleware {
             let reason: String
             let headers: HTTPHeaders
             let identifier: String?
-            let status: Int
+            let status: String
             let code: String
             switch error {
             case let appError as AppError:
@@ -56,7 +56,7 @@ public extension ErrorMiddleware {
                 httpStatus = appError.status
                 headers = appError.headers
                 identifier = appError.identifier
-                status = Int(appError.status.code)
+                status = "\(appError.status.code)"
                 code = "\(appError.status.code.description).\(number).\(appError.number)"
             case let abort as AbortError:
                 /// This is an abort error, we should use its status, reason, and headers
@@ -64,7 +64,7 @@ public extension ErrorMiddleware {
                 httpStatus = abort.status
                 headers = abort.headers
                 identifier = abort.status.code.description
-                status = Int(abort.status.code)
+                status = "\(abort.status.code)"
                 code = "\(abort.status.code).\(number).\(abort.number)"
             case let error as LocalizedError where !environment.isRelease:
                 /// If not release mode, and error is debuggable, provide debug
@@ -73,7 +73,7 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = error.errorDescription
-                status = Int(HTTPStatus.internalServerError.code)
+                status = "\(HTTPStatus.internalServerError.code)"
                 code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             default:
                 /// Not an abort error, and not debuggable or in dev mode
@@ -82,7 +82,7 @@ public extension ErrorMiddleware {
                 httpStatus = .internalServerError
                 headers = [:]
                 identifier = "something_went_wrong"
-                status = Int(HTTPStatus.internalServerError.code)
+                status = "\(HTTPStatus.internalServerError.code)"
                 code = "\(HTTPStatus.internalServerError.code).\(number).0000"
             }
             /// Report the error to logger.

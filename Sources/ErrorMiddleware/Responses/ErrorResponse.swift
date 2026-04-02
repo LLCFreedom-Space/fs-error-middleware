@@ -39,7 +39,7 @@ public struct ErrorResponse: Content {
     public var error: String?
     /// An optional status representing the error state.
     /// This field may contain a status code, textual representation, or other status-related information.
-    public var status: Int?
+    public var status: String?
     /// An optional code representing the error.
     /// This is often used to categorize errors into distinct types or classes, typically defined by the API.
     public var code: String?
@@ -61,7 +61,7 @@ public struct ErrorResponse: Content {
         isError: Bool = true,
         reason: String,
         error: String? = nil,
-        status: Int? = nil,
+        status: String? = nil,
         code: String? = nil,
         errorUri: String = "https://example.com/doc/errors"
     ) {
