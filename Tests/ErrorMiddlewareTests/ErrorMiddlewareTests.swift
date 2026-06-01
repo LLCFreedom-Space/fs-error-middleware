@@ -33,6 +33,17 @@ struct ErrorMiddlewareTests {
         }
         try await app.asyncShutdown()
     }
+    
+    @Test("Error middleware success")
+    func errorMiddlewareSuccess() async throws {
+        try await withApp { app in
+            app.middleware.use(ErrorMiddleware.custom(environment: app.environment, for: 1))
+
+            try await app.test(.POST, "order") { res throws in
+                #expect(res.status == .ok)
+            }
+        }
+    }
 
     @Test("Error middleware snake case")
     func errorMiddlewareSnakeCase() async throws {

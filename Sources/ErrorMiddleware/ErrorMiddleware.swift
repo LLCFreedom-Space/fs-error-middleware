@@ -28,11 +28,7 @@ import Foundation
 /// Extension for ErrorMiddleware.
 public extension ErrorMiddleware {
     /// Creates a custom `ErrorMiddleware` for handling errors in a Vapor application.
-    ///
-    /// This function provides a tailored error handling mechanism based on the application's environment
-    /// and an additional numeric identifier. It categorizes errors into specific cases, assigns appropriate
-    /// HTTP status codes, and generates error responses in JSON format.
-    ///
+    /// 
     /// - Parameters:
     ///   - environment: The current `Environment` of the application, used to determine error visibility and debugging details.
     ///   - number: An additional numeric identifier to uniquely identify error codes.
