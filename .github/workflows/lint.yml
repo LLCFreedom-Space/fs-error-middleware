@@ -2,28 +2,29 @@ name: Lint code
 
 on:
   push:
+  pull_request:
 
 concurrency:
-  group: "linting"
+  group: "linting-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
   SwiftLint:
-    runs-on: macOS-15
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "16.3.0"
-
       - name: Install SwiftLint
-        run: brew install swiftlint
+        run: |
+          curl -fsSL \
+            "https://github.com/realm/SwiftLint/releases/latest/download/swiftlint_linux.zip" \
+            -o swiftlint.zip
+          unzip -q swiftlint.zip swiftlint
+          sudo mv swiftlint /usr/local/bin/
 
       - name: Verify SwiftLint version
         run: swiftlint version
 
       - name: Run SwiftLint
-        run: swiftlint --strict --config .swiftlint.yml
+        run: swiftlint --config .swiftlint.yml

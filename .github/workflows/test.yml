@@ -19,14 +19,14 @@ jobs:
   # macOS
   # =========================
   macos:
-    runs-on: macos-26
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.3.0"
+          xcode-version: latest-stable
       - name: Cache SwiftPM
         uses: actions/cache@v4
         with:
@@ -39,7 +39,15 @@ jobs:
       - name: Build
         run: swift build -v
       - name: Run tests
-        run: swift test
+        run: swift test  -v --enable-code-coverage
+      - name: Fetch Coverage
+        id: coverage-files
+        uses: sersoft-gmbh/swift-coverage-action@v4
+      - name: Publish Coverage to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ steps.coverage-files.outputs.files }}
   # =========================
   # Linux
   # =========================
