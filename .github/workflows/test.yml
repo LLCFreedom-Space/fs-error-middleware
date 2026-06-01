@@ -26,7 +26,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.3.0"
+          xcode-version: latest-stable
       - name: Cache SwiftPM
         uses: actions/cache@v4
         with:
@@ -38,14 +38,22 @@ jobs:
             ${{ runner.os }}-spm-
       - name: Build
         run: swift build -v
-      - name: Test (parallel)
-        run: swift test -v --parallel
+      - name: Run tests
+        run: swift test  -v --enable-code-coverage
+      - name: Fetch Coverage
+        id: coverage-files
+        uses: sersoft-gmbh/swift-coverage-action@v4
+      - name: Publish Coverage to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ steps.coverage-files.outputs.files }}
   # =========================
   # Linux
   # =========================
   linux:
     runs-on: ubuntu-latest
-    container: swift:6.0-jammy
+    container: swift:6.2-jammy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,5 +66,5 @@ jobs:
             linux-spm-
       - name: Build
         run: swift build -v
-      - name: Test (parallel)
-        run: swift test -v --parallel
+      - name: Run tests
+        run: swift test

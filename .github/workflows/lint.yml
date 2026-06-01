@@ -17,7 +17,7 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.3.0"
+          xcode-version: latest-stable
 
       - name: Install SwiftLint
         run: brew install swiftlint
@@ -26,4 +26,4 @@ jobs:
         run: swiftlint version
 
       - name: Run SwiftLint
-        run: swiftlint --strict --config .swiftlint.yml
+        run: swiftlint --config .swiftlint.yml

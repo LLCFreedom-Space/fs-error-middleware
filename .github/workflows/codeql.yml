@@ -15,7 +15,7 @@ concurrency:
 jobs:
   analyze:
     name: Analyze
-    runs-on: macos-15
+    runs-on: macos-26
     permissions:
       security-events: write
 
@@ -35,7 +35,6 @@ jobs:
 
     - name: Build
       run: swift build
-
+    
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
-
